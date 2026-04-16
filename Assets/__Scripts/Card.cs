@@ -126,9 +126,15 @@ public class Card : MonoBehaviour
             // Flip it if necessary
             if (pip.flip) _tGO.transform.rotation = _flipRot;
             // Scale it if necessary (only for the Ace)
-            if (pip.scale != 1)
+            // For hearts on ranks 8-10, reduce pip size to avoid crowding
+            float pipScale = pip.scale;
+            if (suit == 'H')
             {
-                _tGO.transform.localScale = Vector3.one * pip.scale;
+                pipScale *= 0.75f;
+            }
+            if (pipScale != 1)
+            {
+                _tGO.transform.localScale = Vector3.one * pipScale;
             }
             // Give this GameObject a name
             _tGO.name = "pip_" + pipNum++;                                      // c
@@ -164,6 +170,7 @@ public class Card : MonoBehaviour
         _tSRend.sprite = _tSprite;// Assign the face Sprite to _tSRend
         _tSRend.sortingOrder = 1;// Set the sortingOrder
         _tGO.transform.localPosition = Vector3.zero;
+        _tGO.transform.localScale = Vector3.one * 0.7f; // Shrink to reveal corner pips
         _tGO.name = faceName;
     }
 

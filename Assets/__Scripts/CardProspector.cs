@@ -17,15 +17,16 @@ public class CardProspector : Card
     public JsonLayoutSlot layoutSlot;
 
     /// <summary>
-    /// Informs the Prospector class that this card has been clicked.
+    /// Routes clicks to GolfGame when the Golf scene is active,
+    /// otherwise notifies the Prospector Singleton.
     /// </summary>
     override public void OnMouseUpAsButton()
     {
-        // Uncomment the next line to call the base class version of this method
-        // base.OnMouseUpAsButton();                                          // a
-        // Call the CardClicked method on the Prospector Singleton
-        Prospector.CARD_CLICKED(this);
-        base.OnMouseUpAsButton();// b
+        base.OnMouseUpAsButton();
+        if (GolfGame.S != null)
+            GolfGame.CARD_CLICKED(this);   // Golf scene is loaded
+        else
+            Prospector.CARD_CLICKED(this); // Prospector scene is loaded
     }
 
 }
